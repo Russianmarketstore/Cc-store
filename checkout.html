@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Purchase Confirmation</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', sans-serif; }
+        body { background-color: #0b111e; color: #fff; display: flex; justify-content: center; align-items: center; min-height: 100vh; padding: 15px; }
+        .box { background-color: #111827; border: 2px solid #38bdf8; max-width: 400px; width: 100%; border-radius: 20px; padding: 25px; text-align: center; }
+        
+        /* Animation/Ticker */
+        .live-ticker { font-size: 12px; color: #38bdf8; background: #1e293b; padding: 8px; border-radius: 10px; margin-bottom: 15px; }
+        .user-count { font-size: 13px; color: #10b981; margin-bottom: 20px; }
+        
+        .card-view { border: 2px dashed #38bdf8; padding: 20px; border-radius: 15px; margin-bottom: 20px; background: #0f172a; }
+        .card-name { font-size: 24px; font-weight: bold; color: #f59e0b; margin-bottom: 10px; }
+        .price { font-size: 20px; color: #10b981; font-weight: bold; }
+        
+        .delivery-msg { font-size: 13px; color: #9ca3af; margin: 20px 0; background: #1e293b; padding: 10px; border-radius: 8px; }
+        .btn { background: linear-gradient(90deg, #38bdf8, #818cf8); color: white; padding: 15px; border: none; border-radius: 10px; width: 100%; cursor: pointer; font-weight: bold; }
+    </style>
+</head>
+<body>
+    <div class="box">
+        <div class="live-ticker" id="ticker">⚡ Loading recent activity...</div>
+        <div class="user-count" id="userCount">👥 Active Users: 1,248</div>
+        
+        <h2>Confirm Purchase</h2>
+        <div class="card-view">
+            <div id="cardName" class="card-name">Premium Pack</div>
+            <div id="priceDisplay" class="price">₹0</div>
+        </div>
+
+        <div class="delivery-msg">
+            📦 <b>Note:</b> Payment confirm hote hi card aapke <b>Mail Box</b> mein instant aa jayega.
+        </div>
+
+        <button class="btn" onclick="goToPayment()">PROCEED TO PAYMENT</button>
+    </div>
+
+    <script>
+        const urlParams = new URLSearchParams(window.location.search);
+        const card = urlParams.get('card') || 'Premium Card';
+        const price = urlParams.get('price') || '1200';
+        
+        document.getElementById('cardName').innerText = card;
+        document.getElementById('priceDisplay').innerText = `Price: ₹${price}`;
+
+        // Random Buyer Name Ticker
+        const names = ["Rahul", "Amit", "Priya", "Vikram", "Sneha", "Karan"];
+        setInterval(() => {
+            const name = names[Math.floor(Math.random() * names.length)];
+            document.getElementById('ticker').innerText = `🔥 ${name} just purchased a ${card}!`;
+        }, 3000);
+
+        // Active Users Animation
+        setInterval(() => {
+            let count = 1200 + Math.floor(Math.random() * 50);
+            document.getElementById('userCount').innerText = `👥 Active Users: ${count}`;
+        }, 2000);
+
+        function goToPayment() {
+            window.location.href = `payment.html?card=${encodeURIComponent(card)}&price=${price}`;
+        }
+    </script>
+</body>
+</html>
